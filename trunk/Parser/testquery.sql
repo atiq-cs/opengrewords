@@ -834,7 +834,7 @@ insert into wordlist
 	values (278, 'Savor', 'To enjoy a feeling or an experience thoroughly; relish', 'I wanted to savor every moment.', 1, 0, 1);
 insert into wordlist
 	(id, word, Meaning, Example, wdtype, modstat, isprinted)
-	values (279, 'Secrete', 'Hide away, conceal; produce/release substance/liquid' '<br>The pack rat secretes odds and ends (disorganized group of things) in its nest; the pancreas(a large elongated exocrine gland located behind the stomach) secretes insulin in the islets of Langerhans (cell clusters in the pancreas that form the endocrine part of that organ; secrete insulin and other hormones).', NULL, 1, 0, 1);
+	values (279, 'Secrete', 'Hide away, conceal; produce/release substance/liquid', 'The pack rat secretes odds and ends (disorganized group of things) in its nest; the pancreas(a large elongated exocrine gland located behind the stomach) secretes insulin in the islets of Langerhans (cell clusters in the pancreas that form the endocrine part of that organ; secrete insulin and other hormones).', 1, 0, 1);
 insert into wordlist
 	(id, word, Meaning, Example, wdtype, modstat, isprinted)
 	values (280, 'Shard', 'Pieces of broken glass, pottery, or metal', 'Eyewitnesses spoke of rocks and shards of glass flying in the air.', 1, 0, 1);

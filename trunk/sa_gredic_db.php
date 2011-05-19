@@ -1,9 +1,4 @@
 <?php
-/*// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', '1');*/
-
-//error_reporting(0);
 $releaseType="Debug";
 // $releaseType="Release";
 
@@ -12,12 +7,16 @@ if ($releaseType == "Release") {
 	$dbusername = 'atique_atique';
 	$dbuserpassword = 'xtreme_2306';
 	$default_dbname = 'atique_greproject';
+	error_reporting(0);
 }
 else {
 	$dbhost = 'localhost';
 	$dbusername = 'root';
 	$dbuserpassword = 'contest';
 	$default_dbname = 'GREdict';
+	// Enable error reporting
+	error_reporting(E_ALL);
+	ini_set('display_errors', '1');
 }
 
 function db_connect() {
