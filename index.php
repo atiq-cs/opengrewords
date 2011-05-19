@@ -10,6 +10,19 @@ GRE Words Definitions
 	include "./Vars.inc";
 ?>
 <LINK rel="stylesheet" href="style.css" type="text/css">
+<script language='javascript'>
+function changeContent(tablecell)
+{
+    //alert(tablecell.firstChild.nodeValue);
+    tablecell.innerHTML = "<INPUT type=text name=newname onBlur=\"javascript:submitNewName(this);\" value=\""+tablecell.innerHTML+"\">";
+    tablecell.firstChild.focus();
+}
+function submitNewName(textfield)
+{
+    //alert(textfield.value);
+    textfield.parentNode.innerHTML= textfield.value;
+}
+</script>
 </HEAD><BODY>
 <DIV id="wrapper"><br>
 <DIV id="header"><?php
@@ -45,14 +58,9 @@ GRE Words Definitions
 <A href="http://blog.saosx.com/">Computer Technology Support</A><BR>
 <A href="http://sa-sdft.blogspot.com/">Saint Atique Blog</A><BR>
 </DIV>
-
-
 <DIV id="main"><DIV id="content">
 <H2>Word List: High Frequency</H2>
 <?php
-	error_reporting(E_ALL);
-	ini_set('display_errors', '1');
-	
 	include "sa_gredic_db.php";
 	$link_id = db_connect();
 	
@@ -113,7 +121,7 @@ GRE Words Definitions
 	$result = mysql_query($query);
 	
 	// Make table
-	echo "<table border=\"0\">";
+	echo "<table border=\"1\" id=\"maintable\">";
 
 	$wordno = $startlimit;
 	// Use result
@@ -122,12 +130,14 @@ GRE Words Definitions
 	// See also mysql_result(), mysql_fetch_array(), mysql_fetch_row(), etc.
 	while ($row = mysql_fetch_assoc($result)) {
 		$wordno = $wordno + 1;
-		echo "<tr><td>".$wordno.". ";
-		echo "<b>".$row['word']."</b>"."<br>";
+		//echo "<tr><td onDblClick=\"javascript:changeContent(this);\">".$wordno.". ";
+
+		echo "<tr><td width=\"50\">".$wordno.". </td><td>";
+		echo "<b>".$row['word']."</b></td></tr><tr><td>";
 		// display meaning
 		if ($row['Meaning'] != "")
 			//echo ucfirst($row['Meaning'])."<br>";
-			echo ucfirst($row['Meaning']);
+			echo ucfirst($row['Meaning'])."</td></tr><tr><td>";
 			
 		// display Antonyms
 		if ($row['Antonym'] != "")
@@ -155,7 +165,7 @@ GRE Words Definitions
 	
 	$pageTotalNo = $totalWords / $wordperpage;
 
-	echo "<br><br><form action=\"\" method=\"post\"> 		<table border=\"0\"> 		<td><font size=\"2\">Goto</font> 		</td> 		<td><select name=\"currentpage\">";
+	echo "<br><br><form action=\"\" method=\"post\"> 		<table border=\"0\" align=\"center\"> 		<td><font size=\"2\">Goto</font> 		</td> 		<td><select name=\"currentpage\">";
 
 	for ($i = 0; $i < $pageTotalNo; $i++) {
 		if ($selectedpage == ($i-1) % $pageTotalNo)
