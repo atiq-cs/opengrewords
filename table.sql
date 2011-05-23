@@ -13,6 +13,20 @@ Data Definitions
 8. moderation status
 9. reserved field 1, int type
 
+wordtype
+--------
+1 = Master Wordlist
+2 = GRE Wordlist
+3 = Uncategorized Normal Wordlist, all words except type 1 & 2
+4 = Movie Disposal, how to group word for movies?
+5 = Magazine Disposal
+
+create table movielist
+	(id TINYINT NOT NULL AUTO_INCREMENT,
+	title varchar(200) NOT NULL,
+	watchdate DATE,
+	PRIMARY KEY (id));
+
 create table wordlist
 	(id MEDIUMINT NOT NULL AUTO_INCREMENT,
 	word varchar(50) NOT NULL,
@@ -21,16 +35,8 @@ create table wordlist
 	Antonym varchar(300),
 	partsOfSpeech TINYINT(1),
 	wdtype TINYINT NOT NULL,
-	modstat TINYINT(1),
+	movieid TINYINT,
 	isprinted TINYINT(1),
-	PRIMARY KEY (id));
-
-create table wordlist
-	(id MEDIUMINT NOT NULL AUTO_INCREMENT,
-	word varchar(50),
-	wdtype TINYINT NOT NULL,
-	Meaning varchar(1000),
-	isMeaningStar TINYINT(1),
 	PRIMARY KEY (id));
 
 create table synonyms
