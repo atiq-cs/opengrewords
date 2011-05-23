@@ -122,7 +122,7 @@ int main () {
 					sql_query += ", NULL";
 				else
 					isFirstSentence = true;
-				sql_query += ", 1, 0, 1);";
+				sql_query += ", 1, 1);";
 				/*insert into wordlist
 					(word, Meaning, wdtype)
 					values ('Abase', 'lower; degrade; humiliate; make humble; make oneself lose self-respect', 1);*/
@@ -134,7 +134,7 @@ int main () {
 		case 1:
 			// get word
 			formatWordForQuery(line);
-			sql_query = "insert into wordlist\n\t(id, word, Meaning, Example, wdtype, modstat, isprinted)\n\tvalues ("+string(buff)+ ", \'" + line + "\'";
+			sql_query = "insert into wordlist\n\t(id, word, Meaning, Example, wdtype, isprinted)\n\tvalues ("+string(buff)+ ", \'" + line + "\'";
 			break;
 		case 2:
 			// get meaning

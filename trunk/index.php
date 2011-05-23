@@ -17,6 +17,7 @@ function changeContent(tablecell)
     tablecell.innerHTML = "<INPUT type=text name=newname onBlur=\"javascript:submitNewName(this);\" value=\""+tablecell.innerHTML+"\">";
     tablecell.firstChild.focus();
 }
+
 function submitNewName(textfield)
 {
     //alert(textfield.value);
@@ -121,7 +122,7 @@ function submitNewName(textfield)
 	$result = mysql_query($query);
 	
 	// Make table
-	echo "<table border=\"1\" id=\"maintable\">";
+	echo "<table border=\"0\" id=\"maintable\">";
 
 	$wordno = $startlimit;
 	// Use result
@@ -132,13 +133,13 @@ function submitNewName(textfield)
 		$wordno = $wordno + 1;
 		//echo "<tr><td onDblClick=\"javascript:changeContent(this);\">".$wordno.". ";
 
-		echo "<tr><td width=\"50\">".$wordno.". </td><td>";
-		echo "<b>".$row['word']."</b></td></tr><tr><td>";
+		echo "<tr><td width=\"30\">".$wordno.". </td><td id=\"wordtitle\">";
+		echo $row['word']."</td></tr><tr><td onDblClick=\"javascript:changeContent(this);\" colspan=\"2\">";
 		// display meaning
 		if ($row['Meaning'] != "")
 			//echo ucfirst($row['Meaning'])."<br>";
-			echo ucfirst($row['Meaning'])."</td></tr><tr><td>";
-			
+			echo ucfirst($row['Meaning'])."</td></tr><tr><td id=\"example\" colspan=\"2\">";
+
 		// display Antonyms
 		if ($row['Antonym'] != "")
 			echo "Antonym: ".ucfirst($row['Antonym']);
