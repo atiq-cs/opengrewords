@@ -133,7 +133,7 @@ text-align: justify;
 
 #content #maintable td
 {
-	font-size: 9pt; 
+	font-size: 9pt;
 	font-family: verdana;
 	line-height: 1.4em;
 	text-align: left;
@@ -147,6 +147,14 @@ text-align: justify;
 
 #content #maintable td#example
 {
+	padding-bottom: 10px;
+}
+
+#content #maintable td#qexample 
+{
+	font-family: Calibri;
+	font-size: 11pt;
+	font-style: italic;
 	padding-bottom: 10px;
 }
 
