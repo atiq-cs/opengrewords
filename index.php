@@ -23,6 +23,17 @@ function submitNewName(textfield)
     //alert(textfield.value);
     textfield.parentNode.innerHTML= textfield.value;
 }
+
+// 	echo "<img src=\"AddIcon.jpg\" onclick=\"ShowAddTable('AddWordTable')\">";
+
+function ShowAddTable(tableid) {
+	var tabletext = document.getElementById(tableid).innerHTML;
+	if (tabletext == "")
+		document.getElementById(tableid).innerHTML = "\"" + tabletext +"\"<tr><td>Hi Saint! how's going!</td></tr>";
+	else
+		document.getElementById(tableid).innerHTML = "";
+}
+
 </script>
 </HEAD><BODY>
 <DIV id="wrapper"><br>
@@ -38,19 +49,19 @@ function submitNewName(textfield)
 <DIV id="nav1"><H3>Navigation</H3>
 <?php
 	echo "<A href=\"$ucpage\">";
-?>Tech Support</A>
+?>High Freq List</A>
 <br>
 <?php
 	echo "<a href=\"$homesite/acw/index.php\">";
-?>Academic Works</a>
+?>Barron List</a>
 <br>
 <?php
 	echo "<a href=\"$ucpage\">";
-?>Literature</a>
+?>Movie Disposal</a>
 <br>
 <?php
 	echo "<a href=\"$ucpage\">";
-?>About Me</a><br><br>
+?>Magazine Disposal</a><br><br>
 </DIV>
 
 <DIV id="nav2">
@@ -69,6 +80,7 @@ function submitNewName(textfield)
 		die (sql_error());
 	
 	// Initialization
+	$selectedbook = "";
 	$selectedpage = "";
 	// Parse posted information
 	// get page no
@@ -77,12 +89,19 @@ function submitNewName(textfield)
 	}
 	if ($selectedpage == "")		
 		$selectedpage = 0;
-		
+
+	if (isset($_POST['currentbook']))  {
+		$selectedbook = $_POST["currentbook"];
+	}
+	// Validate data, current range for book 1 to 5
+	if ($selectedbook == "" || $selectedbook<1 || $selectedbook>5)
+		$selectedbook = 1;
+	echo "Currently selected wordbook: ".$selectedbook."<br>";
 	$wordperpage = 20;
 	$startlimit = $selectedpage * 20;
 	$endlimit = $startlimit + $wordperpage;
 	
-	$query = "SELECT count(id) as totalWords FROM wordlist where wdtype = 1";
+	$query = "SELECT count(id) as totalWords FROM wordlist where wdtype = ".$selectedbook;
 	// Perform Query
 	$result = mysql_query($query);
 	if (!$result) {
@@ -116,7 +135,7 @@ function submitNewName(textfield)
 	else
 		$wordoffset = $wordperpage;
 	// Next Query
-	$query = "SELECT id, word, Meaning, Example, Antonym FROM wordlist where wdtype=1 LIMIT ".$startlimit.", ".$wordoffset;
+	$query = "SELECT id, word, Meaning, Example, Antonym FROM wordlist where wdtype=".$selectedbook." LIMIT ".$startlimit.", ".$wordoffset;
 
 	// Perform Query
 	$result = mysql_query($query);
@@ -130,6 +149,17 @@ function submitNewName(textfield)
 	// One of the mysql result functions must be used
 	// See also mysql_result(), mysql_fetch_array(), mysql_fetch_row(), etc.
 	while ($row = mysql_fetch_assoc($result)) {
+		if ($selectedbook > 3) {
+			echo "<tr><td id=\"qexample\" colspan=\"2\">";
+			// display usage sentences
+			$example = $row['Example'];
+			if ($example != "") {
+				// not necessary assuming these references are single
+				//$example = str_replace("<br>", "</li><li>", $example);
+				echo "&quot;".ucfirst($example)."&quot;</li></ul></td></tr>";
+			}
+		}
+	
 		$wordno = $wordno + 1;
 		//echo "<tr><td onDblClick=\"javascript:changeContent(this);\">".$wordno.". ";
 
@@ -138,23 +168,26 @@ function submitNewName(textfield)
 		// display meaning
 		if ($row['Meaning'] != "")
 			//echo ucfirst($row['Meaning'])."<br>";
-			echo ucfirst($row['Meaning'])."</td></tr><tr><td id=\"example\" colspan=\"2\">";
+			echo ucfirst($row['Meaning'])."</td></tr>";
 
 		// display Antonyms
 		if ($row['Antonym'] != "")
 			echo "Antonym: ".ucfirst($row['Antonym']);
 
-		// display usage sentences
-		$example = $row['Example'];
-		if ($example != "") {
-			$example = str_replace("<br>", "</li><li>", $example);
-			
-			echo "<ul style=\"list-style-type: square; padding: 0px; margin: 0px; text-indent: 0px; list-style-position: inside\"><li>".ucfirst($example)."</li></ul>";
+		/* When book is less than 4,
+		   because we want different looks and feels for
+		   Contextual words
+		*/
+		if ($selectedbook < 4) {
+			echo "<tr><td id=\"example\" colspan=\"2\">";
+			// display usage sentences
+			$example = $row['Example'];
+			if ($example != "") {
+				$example = str_replace("<br>", "</li><li>", $example);
+				
+				echo "<ul style=\"list-style-type: square; padding: 0px; margin: 0px; text-indent: 0px; list-style-position: inside\"><li>".ucfirst($example)."</li></ul></td></tr>";
+			}
 		}
-			
-		//if ($wordno - $startlimit == 10)
-			//echo "</td><td>";
-		echo "</td></tr>";
 	}
 
 	// Free the resources associated with the result set
@@ -164,10 +197,23 @@ function submitNewName(textfield)
 	// end table
 	echo "</table>";
 	
+	// Draw icon
+	echo "<img src=\"AddIcon.jpg\" onclick=\"ShowAddTable('AddWordTable')\"><br><br>";
+	// Draw hidden table
+	echo "<table id=\"AddWordTable\" border=\"0\" align=\"left\"></table>";
+
 	$pageTotalNo = $totalWords / $wordperpage;
 
-	echo "<br><br><form action=\"\" method=\"post\"> 		<table border=\"0\" align=\"center\"> 		<td><font size=\"2\">Goto</font> 		</td> 		<td><select name=\"currentpage\">";
+	echo "<br><br><form action=\"\" method=\"post\"><table border=\"0\" align=\"center\"><td><font size=\"2\">Book</font></td><td><select name=\"currentbook\">
+	<option value = \"1\" selected=\"true\">Master Wordlist
+	<option value = \"2\">Barron Wordlist
+	<option value = \"3\">Normal Wordlist
+	<option value = \"4\">Movie Disposal
+	<option value = \"5\">Magazine Disposal
+	</select></td><td><font size=\"2\">Goto</font></td><td><select name=\"currentpage\">";
 
+	if ($pageTotalNo == 0)
+		$pageTotalNo = 1;
 	for ($i = 0; $i < $pageTotalNo; $i++) {
 		if ($selectedpage == ($i-1) % $pageTotalNo)
 			echo "<option value = \"".$i."\" selected=\"true\">Next page";
