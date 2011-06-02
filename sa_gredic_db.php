@@ -4,9 +4,9 @@ $releaseType="Debug";
 
 if ($releaseType == "Release") {
 	$dbhost = 'localhost';
-	$dbusername = 'atique_atique';
-	$dbuserpassword = 'xtreme_2306';
-	$default_dbname = 'atique_greproject';
+	$dbusername = 'setusername';
+	$dbuserpassword = 'setuserpassword';
+	$default_dbname = 'greproject';
 	error_reporting(0);
 }
 else {

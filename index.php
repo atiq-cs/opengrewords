@@ -29,7 +29,13 @@ function submitNewName(textfield)
 function ShowAddTable(tableid) {
 	var tabletext = document.getElementById(tableid).innerHTML;
 	if (tabletext == "")
-		document.getElementById(tableid).innerHTML = "\"" + tabletext +"\"<tr><td>Hi Saint! how's going!</td></tr>";
+		document.getElementById(tableid).innerHTML = "<tr><td>Word</td><td><input type=\"text\" name=\"word\" /></td></tr>		<tr><td>Meaning</td><td><input type=\"text\" name=\"meaning\"></td></tr>";
+		
+	/*if (tabletext == "")
+		document.getElementById(tableid).innerHTML = "<tr><td>Word</td><td>
+		<input type=\"text\" name=\"word\" /></td></tr><tr><td>Meaning</td><td>
+		<input type=\"text\" name=\"word\" /></td><td>Example</td><td>
+		<textarea rows=\"2\" cols=\"20\" name=\"example\">test test </textarea></td>	<td>&nbsp;</td><td><input type=\"submit\" value=\"Submit\" /></td></tr>";*/
 	else
 		document.getElementById(tableid).innerHTML = "";
 }
@@ -204,13 +210,13 @@ function ShowAddTable(tableid) {
 
 	$pageTotalNo = $totalWords / $wordperpage;
 
-	echo "<br><br><form action=\"\" method=\"post\"><table border=\"0\" align=\"center\"><td><font size=\"2\">Book</font></td><td><select name=\"currentbook\">
+	echo "<br /><br /><form action=\"\" method=\"post\"><table border=\"0\" align=\"center\"><td><font size=\"2\">Book</font></td><td><select name=\"currentbook\">
 	<option value = \"1\" selected=\"true\">Master Wordlist
 	<option value = \"2\">Barron Wordlist
 	<option value = \"3\">Normal Wordlist
 	<option value = \"4\">Movie Disposal
 	<option value = \"5\">Magazine Disposal
-	</select></td><td><font size=\"2\">Goto</font></td><td><select name=\"currentpage\">";
+	</select></td><td><font size=\"2\">Page</font></td><td><select name=\"currentpage\">";
 
 	if ($pageTotalNo == 0)
 		$pageTotalNo = 1;
@@ -218,13 +224,13 @@ function ShowAddTable(tableid) {
 		if ($selectedpage == ($i-1) % $pageTotalNo)
 			echo "<option value = \"".$i."\" selected=\"true\">Next page";
 		else
-			echo "<option value = \"".$i."\">Page ".($i+1);
+			echo "<option value = \"".$i."\">".($i+1);
 	}
 
 	echo "</select>
 		</td>
 		<td>&nbsp;</td>
-		<td><input type=\"submit\" value=\"Submit\" /></td>
+		<td><input type=\"submit\" value=\"Go\" /></td>
 		</tr>
 		</table></form>";
 
